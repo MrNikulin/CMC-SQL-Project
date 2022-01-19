@@ -12,6 +12,14 @@ IF OBJECT_ID('GoodsNotInStock') IS NOT NULL
 	DROP PROCEDURE [GoodsNotInStock]
 IF OBJECT_ID('GoodsFromSupplier') IS NOT NULL
 	DROP PROCEDURE [GoodsFromSupplier]
+IF OBJECT_ID('InsertOrUpdateGood') IS NOT NULL
+	DROP PROCEDURE [InsertOrUpdateGood]
+IF OBJECT_ID('DeleteFromGoods') IS NOT NULL
+	DROP PROCEDURE [DeleteFromGoods]
+IF OBJECT_ID('InsertOrUpdateSupplier') IS NOT NULL
+	DROP PROCEDURE [InsertOrUpdateSupplier]
+IF OBJECT_ID('DeleteFromSuppliers') IS NOT NULL
+	DROP PROCEDURE [DeleteFromSuppliers
 GO
 
 -- Creating stored procedure ClearTables
@@ -178,6 +186,19 @@ GO
 --- Creating stored procedure DeleteFromSuppliers
 ---		This stored procedure deletes data about some supplier
 CREATE PROCEDURE [DeleteFromSuppliers]
+(
+	@Supplier_ID [int]
+)
+AS
+BEGIN
+	DELETE FROM Suppliers
+	WHERE [Supplier_ID] = @Supplier_ID
+END
+GO
+
+--- Creating stored procedure DeleteFromSuppliers
+---		This stored procedure creates order
+CREATE PROCEDURE [CreateOrder]
 (
 	@Supplier_ID [int]
 )

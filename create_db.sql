@@ -9,10 +9,11 @@ GO
 
 CREATE DATABASE [grocery_store]
  CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'grocery_store', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\grocery_store_Data' , SIZE = 51200KB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
+ /*ON  PRIMARY */
+/*( NAME = N'grocery_store', FILENAME = N'./grocery_store_Data' , SIZE = 51200KB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
  LOG ON 
-( NAME = N'grocery_store_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\grocery_store_Log_File' , SIZE = 51200KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+( NAME = N'grocery_store_log', FILENAME = N'./grocery_store_Log_File' , SIZE = 51200KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+*/
 GO
 
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))

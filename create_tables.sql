@@ -58,7 +58,7 @@ CREATE TABLE [dbo].[Orders_Goods](
 	[Order_ID] [int] NOT NULL,
     [Good_ID] [int] NOT NULL,
     [GoodAmount] [int] NOT NULL,
-	CONSTRAINT [PK_Order_ID_Good_ID] PRIMARY KEY ([Order_ID, Good_ID]),
+	CONSTRAINT [PK_Order_ID_Good_ID] PRIMARY KEY ([Order_ID], [Good_ID]),
 	CONSTRAINT [FK_Order_ID] FOREIGN KEY ([Order_ID])
 		REFERENCES [dbo].[Orders]([Order_ID])
 		ON DELETE CASCADE
