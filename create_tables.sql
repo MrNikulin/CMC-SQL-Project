@@ -36,9 +36,11 @@ CREATE TABLE [dbo].[Goods](
     [Shelf_ID] [int] NOT NULL,
     [Quantity] [int] NOT NULL,
     [Supplier_ID] [int] NOT NULL,
+	CONSTRAINT [PK_Good_ID] PRIMARY KEY ([Good_ID]),
 	CONSTRAINT [FK_Supplier_ID] FOREIGN KEY ([Supplier_ID])
-		REFERENCES [dbo].[Suppliers]([Supplier_ID]),
-	CONSTRAINT [PK_Good_ID] PRIMARY KEY ([Good_ID])
+		REFERENCES [dbo].[Suppliers]([Supplier_ID])
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
 ) ON [PRIMARY]
 GO
 
@@ -58,8 +60,12 @@ CREATE TABLE [dbo].[Orders_Goods](
     [GoodAmount] [int] NOT NULL,
 	CONSTRAINT [PK_Order_ID_Good_ID] PRIMARY KEY ([Order_ID, Good_ID]),
 	CONSTRAINT [FK_Order_ID] FOREIGN KEY ([Order_ID])
-		REFERENCES [dbo].[Orders]([Order_ID]),
+		REFERENCES [dbo].[Orders]([Order_ID])
+		ON DELETE CASCADE
+        ON UPDATE CASCADE,
 	CONSTRAINT [FK_Good_ID] FOREIGN KEY ([Good_ID])
-		REFERENCES [dbo].[Goods]([Good_ID]),            
+		REFERENCES [dbo].[Goods]([Good_ID])
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
 ) ON [PRIMARY] 
 GO

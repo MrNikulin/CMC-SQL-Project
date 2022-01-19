@@ -42,13 +42,13 @@ BEGIN
 
 	ALTER TABLE [dbo].[Orders_Goods]
 		ADD CONSTRAINT [FK_Order_ID]
-			FOREIGN KEY ([Order_ID]) REFERENCES [dbo].[Orders]([Order_ID])
+			FOREIGN KEY ([Order_ID]) REFERENCES [dbo].[Orders]([Order_ID]) ON DELETE CASCADE ON UPDATE CASCADE
 	ALTER TABLE [dbo].[Orders_Goods]
 		ADD CONSTRAINT [FK_Good_ID]
-			FOREIGN KEY ([Good_ID]) REFERENCES [dbo].[Goods]([Good_ID])
+			FOREIGN KEY ([Good_ID]) REFERENCES [dbo].[Goods]([Good_ID]) ON DELETE CASCADE ON UPDATE CASCADE
 	ALTER TABLE [dbo].[Goods]
 		ADD CONSTRAINT [FK_Supplier_ID]
-			FOREIGN KEY ([Supplier_ID]) REFERENCES [dbo].[Suppliers]([Supplier_ID])
+			FOREIGN KEY ([Supplier_ID]) REFERENCES [dbo].[Suppliers]([Supplier_ID]) ON DELETE CASCADE ON UPDATE CASCADE
 END
 GO
 
