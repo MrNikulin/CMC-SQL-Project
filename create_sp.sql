@@ -200,11 +200,23 @@ GO
 ---		This stored procedure creates order
 CREATE PROCEDURE [CreateOrder]
 (
-	@Supplier_ID [int]
+	@Order_ID [int],
+	@Positions [orders_positions_t]
 )
 AS
 BEGIN
-	DELETE FROM Suppliers
-	WHERE [Supplier_ID] = @Supplier_ID
+	BEGIN TRY
+		BEGIN TRAN;
+			INSERT INTO [dbo].[Orders] 
+			VALUES (@Order_ID);
+
+			INSERT INTO [dbo].[Orders_Goods]
+			SELECT Order_ID, Good_ID, GoodAmount
+			FROM @Positions
+		COMMIT TRAN;
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRAN
+	END CATCH	
 END
 GO
