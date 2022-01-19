@@ -53,7 +53,7 @@ END
 GO
 
 --- Creating stored procedure ShowAllGoods
----		This procedure select all goods from data base
+---		This procedure selects all goods from database
 CREATE PROCEDURE [ShowAllGoods]
 AS
 BEGIN
@@ -63,7 +63,7 @@ END
 GO
 
 --- Creating stored procedure GoodsInStock
----		This procedure select goods that are in stock
+---		This procedure selects goods that are in stock
 CREATE PROCEDURE [GoodsInStock]
 AS
 BEGIN
@@ -74,7 +74,7 @@ END
 GO
 
 --- Creating stored procedure GoodsNotInStock
----		This procedure select goods that are not in stock
+---		This procedure selects goods that are not in stock
 CREATE PROCEDURE [GoodsNotInStock]
 AS
 BEGIN
@@ -85,7 +85,7 @@ END
 GO
 
 --- Creating stored procedure GoodsFromSupplier
----		This procedure select goods supplied by given supplier
+---		This procedure selects goods supplied by given supplier
 CREATE PROCEDURE [GoodsFromSupplier]
 (
 	@Supplier_ID [int]
@@ -97,5 +97,67 @@ BEGIN
 		g.[Name]
 	FROM [dbo].[Goods] g
 	WHERE g.[Supplier_ID] = @Supplier_ID
+END
+GO
+
+--- Creating stored procedure InsertOrUpdateGood
+---		This procedure inserts new good into database or updates it if given good already exists
+CREATE PROCEDURE [InsertOrUpdateGood]
+(
+	@Good_ID [int],
+	@Name NVARCHAR(max),
+	@Shelf_ID [int],
+	@Quantity [int],
+	@Supplier_ID [int]
+)
+AS
+BEGIN
+	IF EXISTS
+	   (SELECT * FROM [dbo].[Goods] AS g
+	    WHERE g.[Good_ID] = @Good_ID)
+	  BEGIN
+		UPDATE
+			Goods
+		SET
+			[Name] = @Name,
+			[Shelf_ID] = @Shelf_ID,
+			[Quantity] = @Quantity,
+			[Supplier_ID] = @Supplier_ID
+		WHERE
+			[Good_ID] = @Good_ID
+	  END
+	ELSE
+	  INSERT INTO [dbo].[Goods]
+	  VALUES (@Good_ID, @Name, @Shelf_ID, @Quantity, @Supplier_ID)
+END
+GO
+
+--- Creating stored procedure InsertOrUpdateSupplier
+---		This procedure inserts new supplier into database or updates it if given supplier already exists
+CREATE PROCEDURE [InsertOrUpdateSupplier]
+(
+	@Supplier_ID [int],
+	@Name NVARCHAR(max),
+	@Address NVARCHAR(max),
+	@PhoneNumber NVARCHAR(max)
+)
+AS
+BEGIN
+	IF EXISTS
+	   (SELECT * FROM [dbo].[Suppliers] AS s
+	    WHERE s.[Supplier_ID] = @Supplier_ID)
+	  BEGIN
+		UPDATE
+			Suppliers
+		SET
+			[Name] = @Name,
+			[Address] = @Address,
+			[PhoneNumber] = @PhoneNumber
+		WHERE
+			[Supplier_ID] = @Supplier_ID
+	  END
+	ELSE
+	  INSERT INTO [dbo].[Suppliers]
+	  VALUES (@Supplier_ID, @Name, @Address, @PhoneNumber)
 END
 GO
