@@ -21,31 +21,40 @@ IF OBJECT_ID('dbo.CreateTempTable') IS NOT NULL
 GO
 
 -- Creating stored procedure ClearTables
---		This stored procedure simply clears all the tables from loaded date
+--		This stored procedure clears all the tables from loaded date
 CREATE PROCEDURE [ClearTables]
 AS
 BEGIN
 	IF EXISTS 
 		(SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
-         WHERE [CONSTRAINT_SCHEMA] = 'dbo' AND [CONSTRAINT_NAME] = 'FK_URL_ID'
+         WHERE [CONSTRAINT_SCHEMA] = 'dbo' AND [CONSTRAINT_NAME] = 'FK_Order_ID'
 				                          AND [CONSTRAINT_TYPE] = 'FOREIGN KEY')
-	  ALTER TABLE [dbo].[Catalog] DROP CONSTRAINT [FK_URL_ID]
+	  ALTER TABLE [dbo].[Orders_Goods] DROP CONSTRAINT [FK_Order_ID]
 	IF EXISTS 
 		(SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
-         WHERE [CONSTRAINT_SCHEMA] = 'dbo' AND [CONSTRAINT_NAME] = 'FK_Section_ID'
+         WHERE [CONSTRAINT_SCHEMA] = 'dbo' AND [CONSTRAINT_NAME] = 'FK_Good_ID'
 				                          AND [CONSTRAINT_TYPE] = 'FOREIGN KEY')
-	  ALTER TABLE [dbo].[Catalog] DROP CONSTRAINT [FK_Section_ID]
+	  ALTER TABLE [dbo].[Orders_Goods] DROP CONSTRAINT [FK_Good_ID]
+	IF EXISTS 
+		(SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+         WHERE [CONSTRAINT_SCHEMA] = 'dbo' AND [CONSTRAINT_NAME] = 'FK_Supplier_ID'
+				                          AND [CONSTRAINT_TYPE] = 'FOREIGN KEY')
+	  ALTER TABLE [dbo].[Goods] DROP CONSTRAINT [FK_Supplier_ID]
 
-	TRUNCATE TABLE [dbo].[Catalog]
-	TRUNCATE TABLE [dbo].[URL]
-	TRUNCATE TABLE [dbo].[Section]
+	TRUNCATE TABLE [dbo].[Orders_Goods]
+	TRUNCATE TABLE [dbo].[Orders]
+	TRUNCATE TABLE [dbo].[Goods]
+	TRUNCATE TABLE [dbo].[Suppliers]
 
-	ALTER TABLE [dbo].[Catalog]
-		ADD CONSTRAINT [FK_URL_ID]
-			FOREIGN KEY([URL_ID]) REFERENCES [dbo].[URL]([URL_ID])
-	ALTER TABLE [dbo].[Catalog]
-		ADD CONSTRAINT [FK_Section_ID]
-			FOREIGN KEY ([Section_ID]) REFERENCES [dbo].[Section]([Section_ID])
+	ALTER TABLE [dbo].[Orders_Goods]
+		ADD CONSTRAINT [FK_Order_ID]
+			FOREIGN KEY ([Order_ID]) REFERENCES [dbo].[Orders]([Order_ID])
+	ALTER TABLE [dbo].[Orders_Goods]
+		ADD CONSTRAINT [FK_Good_ID]
+			FOREIGN KEY ([Good_ID]) REFERENCES [dbo].[Goods]([Good_ID])
+	ALTER TABLE [dbo].[Goods]
+		ADD CONSTRAINT [FK_Supplier_ID]
+			FOREIGN KEY ([Supplier_ID]) REFERENCES [dbo].[Suppliers]([Supplier_ID])
 END
 GO
 
