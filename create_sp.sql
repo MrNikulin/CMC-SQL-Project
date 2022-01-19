@@ -132,6 +132,19 @@ BEGIN
 END
 GO
 
+--- Creating stored procedure DeleteFromGoods
+---		This stored procedure deletes data about some good
+CREATE PROCEDURE [DeleteFromGoods]
+(
+	@Good_ID [int]
+)
+AS
+BEGIN
+	DELETE FROM Goods
+	WHERE [Good_ID] = @Good_ID
+END
+GO
+
 --- Creating stored procedure InsertOrUpdateSupplier
 ---		This procedure inserts new supplier into database or updates it if given supplier already exists
 CREATE PROCEDURE [InsertOrUpdateSupplier]
@@ -159,5 +172,18 @@ BEGIN
 	ELSE
 	  INSERT INTO [dbo].[Suppliers]
 	  VALUES (@Supplier_ID, @Name, @Address, @PhoneNumber)
+END
+GO
+
+--- Creating stored procedure DeleteFromSuppliers
+---		This stored procedure deletes data about some supplier
+CREATE PROCEDURE [DeleteFromSuppliers]
+(
+	@Supplier_ID [int]
+)
+AS
+BEGIN
+	DELETE FROM Suppliers
+	WHERE [Supplier_ID] = @Supplier_ID
 END
 GO
